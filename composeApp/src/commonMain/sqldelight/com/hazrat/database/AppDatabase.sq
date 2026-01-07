@@ -1,0 +1,18 @@
+CREATE TABLE reminder(
+    id INTEGER NOT NULL PRIMARY KEY,
+
+    contact_name TEXT NOT NULL,
+    contact_number TEXT NOT NULL,
+
+    message TEXT NOT NULL
+);
+
+upsert:
+INSERT OR REPLACE INTO reminder(id, contact_name, contact_number, message) VALUES(?, ?, ?, ?);
+
+getAllRemider:
+SELECT * FROM reminder;
+
+delete:
+DELETE FROM reminder WHERE id=?;
+

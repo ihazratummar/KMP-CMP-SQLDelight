@@ -1,0 +1,20 @@
+package com.hazrat.learning.sqldelightkmp.database
+
+import android.content.Context
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import com.hazrat.sqldelight.AppDatabase
+
+actual class SqlDriverFactory actual constructor(context: Any?) {
+
+    private val context = context as Context
+
+    actual fun getSqlDriver(): SqlDriver {
+
+        return AndroidSqliteDriver(
+            schema = AppDatabase.Schema,
+            context = context,
+            name = "AppDatabase.db"
+        )
+    }
+}
