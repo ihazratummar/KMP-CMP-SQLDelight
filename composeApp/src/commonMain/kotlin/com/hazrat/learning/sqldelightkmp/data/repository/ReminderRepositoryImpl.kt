@@ -9,6 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlin.random.Random
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 
 /**
@@ -28,32 +33,40 @@ class ReminderRepositoryImpl(
             .map { reminders ->
                 reminders.map {
                     Reminder(
-                        id = it.id.toInt(),
+                        id = it.id,
                         contactName = it.contact_name,
                         contactNumber = it.contact_number,
-                        message = it.message
+                        message = it.message,
+                        scheduledAt = it.scheduled_at,
+                        state = it.state,
+                        createdAt = it.created_at,
+                        updatedAt = it.updated_at
                     )
                 }
             }
     }
 
-    override suspend fun upsert(
-        id: Int,
+    @OptIn(ExperimentalTime::class, ExperimentalUuidApi::class)
+    override suspend fun insertReminder(
         contactName: String,
         contactNumber: String,
         message: String
     ) {
         appDatabase.appDatabaseQueries
-            .upsert(
-                id = id.toLong(),
+            .insertReminder(
+                id = Uuid.random().toString(),
                 contact_name = contactName,
                 contact_number = contactNumber,
-                message = message
+                message = message,
+                scheduled_at = Clock.System.now().epochSeconds,
+                state = "SCHEDULED",
+                created_at = Clock.System.now().epochSeconds,
+                updated_at =Clock.System.now().epochSeconds,
             )
     }
 
-    override suspend fun delete(id: Int) {
+    override suspend fun delete(id: String) {
         appDatabase.appDatabaseQueries
-            .delete(id = id.toLong())
+            .delete(id = id)
     }
 }

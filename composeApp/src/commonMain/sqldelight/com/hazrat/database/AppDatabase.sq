@@ -1,14 +1,39 @@
 CREATE TABLE reminder(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id TEXT NOT NULL PRIMARY KEY,
 
     contact_name TEXT NOT NULL,
     contact_number TEXT NOT NULL,
+    message TEXT NOT NULL,
 
-    message TEXT NOT NULL
+    scheduled_at INTEGER NOT NULL,
+    state TEXT NOT NULL,
+
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER  NOT NULL
 );
 
-upsert:
-INSERT OR REPLACE INTO reminder(id, contact_name, contact_number, message) VALUES(?, ?, ?, ?);
+insertReminder:
+INSERT INTO reminder(
+    id,
+    contact_name,
+    contact_number,
+    message,
+    scheduled_at,
+    state,
+    created_at,
+    updated_at
+)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+
+updateReminder:
+UPDATE reminder
+SET
+    contact_name = ?,
+    contact_number = ?,
+    message = ?
+WHERE id = ?;
+
 
 getAllRemider:
 SELECT * FROM reminder;

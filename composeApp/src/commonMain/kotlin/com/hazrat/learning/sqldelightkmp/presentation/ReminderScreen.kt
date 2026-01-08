@@ -99,7 +99,6 @@ fun ReminderScreen(
                 Button(
                     onClick = {
                         reminderViewModel.saveReminder(
-                            id = Random.nextInt(),
                             contactName = contactName,
                             contactNumber = contactNumber,
                             message = message
@@ -117,14 +116,14 @@ fun ReminderScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                items(reminders) {
+                items(reminders) {reminder->
 
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clickable {
-                                onReminderClick(it.message)
+                                onReminderClick(reminder.message)
                             }
                             .background(
                                 color = MaterialTheme.colorScheme.surfaceContainer,
@@ -138,16 +137,18 @@ fun ReminderScreen(
                             contentDescription = null,
                             modifier = Modifier.padding(8.dp)
                                 .clickable {
-                                    reminderViewModel.delete(id = it.id)
+                                    reminder.id.let {
+                                        reminderViewModel.delete(id = it)
+                                    }
                                 }
                         )
 
                         Column(
                             modifier = Modifier.fillMaxWidth().padding(8.dp)
                         ) {
-                            Text(it.contactName)
-                            Text(it.contactNumber)
-                            Text(it.message)
+                            Text(reminder.contactName)
+                            Text(reminder.contactNumber)
+                            Text(reminder.message)
                         }
                     }
                 }

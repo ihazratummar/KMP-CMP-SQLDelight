@@ -20,13 +20,13 @@ class ReminderViewModel(
     val reminders = repository.getAllReminder()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    fun saveReminder(id: Int, contactName: String, contactNumber: String, message: String){
+    fun saveReminder(contactName: String, contactNumber: String, message: String){
         viewModelScope.launch {
-            repository.upsert(id, contactName, contactNumber, message)
+            repository.insertReminder(contactName, contactNumber, message)
         }
     }
 
-    fun delete(id: Int){
+    fun delete(id: String){
         viewModelScope.launch {
             repository.delete(id)
         }

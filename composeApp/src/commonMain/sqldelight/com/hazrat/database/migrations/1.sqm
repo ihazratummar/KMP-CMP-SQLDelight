@@ -1,0 +1,20 @@
+CREATE TABLE reminder_new(
+    id TEXT NOT NULL PRIMARY KEY,
+    contact_name TEXT NOT NULL,
+    contact_number TEXT NOT NULL,
+    message TEXT NOT NULL
+);
+
+
+INSERT INTO reminder_new
+SELECT
+    CAST(id AS TEXT),
+    contact_name,
+    contact_number,
+    message
+FROM reminder;
+
+DROP TABLE reminder;
+
+ALTER TABLE reminder_new RENAME TO reminder;
+

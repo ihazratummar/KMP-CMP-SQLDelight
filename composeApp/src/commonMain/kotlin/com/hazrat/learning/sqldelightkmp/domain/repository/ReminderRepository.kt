@@ -13,7 +13,7 @@ interface ReminderRepository {
 
 
     fun getAllReminder () : Flow<List<Reminder>>
-    suspend fun upsert(id: Int, contactName: String, contactNumber: String, message: String)
-    suspend fun delete(id: Int)
+    suspend fun insertReminder(contactName: String, contactNumber: String, message: String)
+    suspend fun delete(id: String)
 
 }
