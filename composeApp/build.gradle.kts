@@ -76,7 +76,7 @@ sqldelight {
         create("AppDatabase"){
             packageName.set("com.hazrat.sqldelight")
             srcDirs("src/commonMain/sqldelight")
-            version = 4
+            version = 1
         }
     }
     linkSqlite.set(true)

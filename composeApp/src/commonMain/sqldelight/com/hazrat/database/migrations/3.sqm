@@ -1,8 +1,0 @@
--- Add correct column
-ALTER TABLE reminder
-ADD COLUMN updated_at INTEGER NOT NULL DEFAULT 0;
-
--- Copy data from wrong column
-
-UPDATE reminder
-SET updated_at = update_at
